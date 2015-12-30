@@ -1,0 +1,31 @@
+#!/bin/bash -eu
+if [ $# -ne 1 ]; then
+  echo 'Usage: siman /path/to/menu'
+  exit 1
+fi
+
+if [ ! -e ~/.siman ]; then
+  mkdir ~/.siman
+fi
+
+if [ ! -e ~/.siman/menu_no ]; then
+  echo '1' > ~/.siman/menu_no
+fi
+
+menu_no=`cat ~/.siman/menu_no`
+menu=$1
+
+cat $menu | tail -n +$menu_no | while read line; do
+  dish=(`echo $line | cut -d " " -f 1-`)
+  number=$(( ${dish[0]} ))
+  recipe=${dish[2]}
+  echo "INFO: Start cooking the ${number}th dish."
+  curl -L $recipe | sh
+  if [ $? -ne '0' ]; then
+    echo "ERROR: Failed cooking the ${number}th dish."
+    exit 1
+  fi
+  echo "INFO: Finish cooking the ${number}th dish."
+  res=$(( $number + 1 ))
+  echo $res > ~/.siman/menu_no
+done
