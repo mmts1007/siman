@@ -47,5 +47,5 @@ Number  Content  Location of recipes
 Example
 
 ```
-001  echo_hello_world  http://git.io/vEAWK
+001  echo_hello_world  https://git.io/vEAWK
 ```
