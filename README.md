@@ -1,5 +1,5 @@
 # siman
-Simple It MANagement tool
+SImple configuration MANagement tool
 
 ## Installation
 1. Clone siman
